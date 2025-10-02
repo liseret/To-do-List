@@ -12,9 +12,9 @@ void SaveTasksToFile(const vector<Task>& tasks, const string& FileName)
 	ostream << tasks.size();
 
 	for (const Task& task: tasks) {
-		string description = task.description;
+		string description = task.Get_Description();
 		replace(description.begin(), description.end(), ' ', '_');
-		ostream << '\n' << description << ' ' << task.done;
+		ostream << '\n' << description << ' ' << task.Get_Done();
 	}
 }
 

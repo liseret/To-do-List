@@ -94,8 +94,8 @@ void Frame::Closes(wxCloseEvent& evt)
 	vector <Task> tasks;
 	for (int i = 0; i < CheckListBox->GetCount(); i++) {
 		Task task;
-		task.description = CheckListBox->GetString(i);
-		task.done = CheckListBox->IsChecked(i);
+		task.Set_Description(CheckListBox->GetString(i).ToStdString());
+		task.Set_Done (CheckListBox->IsChecked(i));
 		tasks.push_back(task);
 	}
 	SaveTasksToFile(tasks, "tasks.txt");
@@ -108,8 +108,8 @@ void Frame::LoadTask()
 	for (const Task& task : tasks) {
 		int index = CheckListBox->GetCount();
 		
-		CheckListBox->Insert(task.description,index);
-		CheckListBox->Check(index, task.done);
+		CheckListBox->Insert(task.Get_Description(), index);
+		CheckListBox->Check(index, task.Get_Done());
 		
 	}
 

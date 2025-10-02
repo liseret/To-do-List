@@ -19,7 +19,7 @@ private:
 	wxPanel* Panel;
 	wxStaticText* HeadText;
 	wxTextCtrl* InputText;
-	wxButton* AddButton;
+	//wxButton* AddButton;
 	wxCheckListBox* CheckListBox;
 	wxButton* ClearButton;
 
