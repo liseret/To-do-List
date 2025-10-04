@@ -8,7 +8,7 @@ public:
 private:
 	void CreateControls();
 	void WorkingAddAndEtc();
-	//void OnAddButtonClicked(wxCommandEvent& evt);
+	void OnAddButtonClicked(wxCommandEvent& evt);
 	void AddTaskFromInput();
 	void OnInputEnter(wxCommandEvent& evt);
 	void OnListKeyPress(wxKeyEvent& evt);
@@ -16,10 +16,11 @@ private:
 	void OnClearButtonClicked(wxCommandEvent& evt);
 	void Closes(wxCloseEvent& evt);
 	void LoadTask();
+	void MouseEvent(wxMouseEvent& evt);
 	wxPanel* Panel;
 	wxStaticText* HeadText;
 	wxTextCtrl* InputText;
-	//wxButton* AddButton;
+	wxButton* AddButton;
 	wxCheckListBox* CheckListBox;
 	wxButton* ClearButton;
 

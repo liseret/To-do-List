@@ -19,15 +19,15 @@ void Frame::CreateControls()
 	Panel = new wxPanel(this);
 	Panel->SetFont(MainFont);
 
-	HeadText = new wxStaticText(Panel, wxID_ANY, "To do List", wxPoint(0, 22), wxSize(800, -1),wxALIGN_CENTER_HORIZONTAL);
+	HeadText = new wxStaticText(Panel, wxID_ANY, "To do List", wxPoint(0, 22), wxSize(600, -1),wxALIGN_CENTER_HORIZONTAL);
 	HeadText->SetFont(HeadLineFont);
 	HeadText->SetBackgroundColour(*wxGREEN);//кастом цветов :о
 
 
-	ClearButton = new wxButton(Panel, wxID_ANY, "Clear", wxPoint(390, 525), wxSize(100, 35));
-	//AddButton = new wxButton(Panel, wxID_ANY, "Add", wxPoint(600, 80), wxSize(100, 35)); #кнопки не SWAG
-	InputText = new wxTextCtrl(Panel, wxID_ANY, "", wxPoint(100, 80), wxSize(600, 35),wxTE_PROCESS_ENTER);
-	CheckListBox = new wxCheckListBox(Panel, wxID_ANY, wxPoint(100, 120), wxSize(600, 400));
+	ClearButton = new wxButton(Panel, wxID_ANY, "Clear", wxPoint(250, 593), wxSize(100, 35));
+	AddButton = new wxButton(Panel, wxID_ANY, "Add", wxPoint(480, 80), wxSize(100, 35));//кнопки не SWAG
+	InputText = new wxTextCtrl(Panel, wxID_ANY, "", wxPoint(20, 80), wxSize(475, 35),wxTE_PROCESS_ENTER);
+	CheckListBox = new wxCheckListBox(Panel, wxID_ANY, wxPoint(20, 120), wxSize(560, 400));
 	
 	
 	
@@ -35,17 +35,18 @@ void Frame::CreateControls()
 
 void Frame::WorkingAddAndEtc()
 {
-	//AddButton->Bind(wxEVT_BUTTON, &Frame::OnAddButtonClicked,this); 
+	AddButton->Bind(wxEVT_BUTTON, &Frame::OnAddButtonClicked,this); 
 	InputText -> Bind(wxEVT_TEXT_ENTER, &Frame::OnInputEnter, this);
 	CheckListBox->Bind(wxEVT_KEY_DOWN, &Frame::OnListKeyPress, this);
+	CheckListBox->Bind(wxEVT_RIGHT_DOWN, &Frame::MouseEvent, this);
 	ClearButton->Bind(wxEVT_BUTTON, &Frame::OnClearButtonClicked, this);
 	this->Bind(wxEVT_CLOSE_WINDOW, &Frame::Closes, this);
 }
 
-//void Frame::OnAddButtonClicked(wxCommandEvent& evt)
-//{
-//	AddTaskFromInput();
-//}
+void Frame::OnAddButtonClicked(wxCommandEvent& evt)
+{
+	AddTaskFromInput();
+}
 
 void Frame::AddTaskFromInput()
 {
@@ -64,10 +65,9 @@ void Frame::OnInputEnter(wxCommandEvent& evt)
 
 void Frame::OnListKeyPress(wxKeyEvent& evt)
 {
-	switch (evt.GetKeyCode()) {
-	case WXK_DELETE:
+	if (evt.GetKeyCode()== WXK_DELETE) {
 		DeleteTask();
-		break;
+		
 	}
 }
 
@@ -113,5 +113,10 @@ void Frame::LoadTask()
 		
 	}
 
+}
+
+void Frame::MouseEvent(wxMouseEvent& evt)
+{
+	DeleteTask();
 }
 
