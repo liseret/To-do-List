@@ -5,7 +5,7 @@
 wxIMPLEMENT_APP(App);
 
 bool::App::OnInit() {
-	Frame* mainFrame = new Frame("To do List");
+	Frame* mainFrame = new Frame("To- do List");
 	mainFrame->SetClientSize(600, 700);
 	mainFrame->Center();
 	mainFrame->Show();

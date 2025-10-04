@@ -17,6 +17,7 @@ private:
 	void Closes(wxCloseEvent& evt);
 	void LoadTask();
 	void MouseEvent(wxMouseEvent& evt);
+	void SizeW();
 	wxPanel* Panel;
 	wxStaticText* HeadText;
 	wxTextCtrl* InputText;
