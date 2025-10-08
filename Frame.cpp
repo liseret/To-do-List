@@ -19,19 +19,21 @@ void Frame::CreateControls()
 
 	Panel = new wxPanel(this);
 	Panel->SetFont(MainFont);
+	
+	if (OriginPng.LoadFile("back.png", wxBITMAP_TYPE_ANY)) {
+		Panel->SetBackgroundStyle(wxBG_STYLE_PAINT);
+		TrippyTroppo = wxBitmap(OriginPng);
+		WorkBack();
+	}
 
 	HeadText = new wxStaticText(Panel, wxID_ANY, "To-do List");
 	HeadText->SetFont(HeadLineFont);
 	HeadText->SetBackgroundColour(*wxGREEN);//кастом цветов :о
 
-
 	ClearButton = new wxButton(Panel, wxID_ANY, "Clear");
 	AddButton = new wxButton(Panel, wxID_ANY, "Add");//кнопки не SWAG
 	InputText = new wxTextCtrl(Panel, wxID_ANY, "",wxDefaultPosition,wxDefaultSize, wxTE_PROCESS_ENTER);
 	CheckListBox = new wxCheckListBox(Panel, wxID_ANY);
-	
-	
-	
 }
 
 void Frame::WorkingAddAndEtc()
@@ -137,8 +139,37 @@ void Frame::SizeW()
 	size->AddSpacer(50);
 
 	wxGridSizer* bsize = new wxGridSizer(1);
-	bsize->Add(size, wxSizerFlags().Border(wxALL, 30).Expand());
+	bsize->Add(size, wxSizerFlags().Border(wxALL, 35).Expand());
 	Panel->SetSizer(bsize);
 	bsize->SetSizeHints(this);
+}
+
+void Frame::Backgraund(wxPaintEvent& evt)
+{
+	wxPaintDC dc(Panel);
+	dc.Clear();
+	if (TrippyTroppo.IsOk()) {
+		dc.DrawBitmap(TrippyTroppo, 0, 0, false);
+	}
+}
+
+void Frame::BackgraundSize(wxSizeEvent& evt)
+{
+	if (!OriginPng.IsOk()) {
+		return;
+	}
+	wxSize pic = Panel->GetClientSize();
+	if (pic.GetWidth() > 0 && pic.GetHeight() > 0) {
+		wxImage Tripp = OriginPng.Scale(pic.GetWidth(), pic.GetHeight(), wxIMAGE_QUALITY_NORMAL);//если поставить HIGH покажут жопу (честна)
+		TrippyTroppo = wxBitmap(Tripp);
+		Panel->Refresh();
+	}
+	evt.Skip();
+}
+
+void Frame::WorkBack()
+{
+	Panel->Bind(wxEVT_PAINT, &Frame::Backgraund, this);
+	Panel->Bind(wxEVT_SIZE, &Frame::BackgraundSize, this);
 }
 

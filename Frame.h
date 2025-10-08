@@ -18,12 +18,17 @@ private:
 	void LoadTask();
 	void MouseEvent(wxMouseEvent& evt);
 	void SizeW();
+	void Backgraund(wxPaintEvent& evt);
+	void BackgraundSize(wxSizeEvent& evt);
+	void WorkBack();
 	wxPanel* Panel;
 	wxStaticText* HeadText;
 	wxTextCtrl* InputText;
 	wxButton* AddButton;
 	wxCheckListBox* CheckListBox;
 	wxButton* ClearButton;
+	wxImage OriginPng;
+	wxBitmap TrippyTroppo;
 
 };
 
