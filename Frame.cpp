@@ -3,13 +3,31 @@
 #include <wx/wx.h>
 #include <string>
 #include <vector>
+#include <wx/dcbuffer.h>
+
 using namespace std;
 
 Frame::Frame(const wxString& title):wxFrame(nullptr, wxID_ANY,title) {
+	
 	CreateControls();
+	if (wxFileExists("back.png")) {
+		OriginPng.LoadFile("back.png", wxBITMAP_TYPE_ANY);
+		Panel->SetBackgroundStyle(wxBG_STYLE_PAINT);
+		TrippyTroppo = wxBitmap(OriginPng);
+		WorkBack();
+	}
 	SizeW();
 	WorkingAddAndEtc();
 	LoadTask();
+
+#ifdef __WXMSW__
+	SetIcon(wxIcon("IDI_APP_ICON"));
+#else
+	if (wxFileExists("./icons/icon.png") {
+		Icon.LoadFile("./icons/icon.png", wxBITMAP_TYPE_PNG);
+		SetIcon(Icon);
+	}
+#endif
 }
 
 void Frame::CreateControls()
@@ -20,15 +38,10 @@ void Frame::CreateControls()
 	Panel = new wxPanel(this);
 	Panel->SetFont(MainFont);
 	
-	if (OriginPng.LoadFile("back.png", wxBITMAP_TYPE_ANY)) {
-		Panel->SetBackgroundStyle(wxBG_STYLE_PAINT);
-		TrippyTroppo = wxBitmap(OriginPng);
-		WorkBack();
-	}
-
 	HeadText = new wxStaticText(Panel, wxID_ANY, "To-do List");
 	HeadText->SetFont(HeadLineFont);
-	HeadText->SetBackgroundColour(*wxGREEN);//кастом цветов :о
+	HeadText->SetBackgroundColour(wxColor(175, 255, 5));
+	//HeadText->SetBackgroundColour(*wxGREEN);//кастом цветов :о
 
 	ClearButton = new wxButton(Panel, wxID_ANY, "Clear");
 	AddButton = new wxButton(Panel, wxID_ANY, "Add");//кнопки не SWAG
@@ -146,7 +159,7 @@ void Frame::SizeW()
 
 void Frame::Backgraund(wxPaintEvent& evt)
 {
-	wxPaintDC dc(Panel);
+	wxAutoBufferedPaintDC dc(Panel);
 	dc.Clear();
 	if (TrippyTroppo.IsOk()) {
 		dc.DrawBitmap(TrippyTroppo, 0, 0, false);
@@ -160,7 +173,7 @@ void Frame::BackgraundSize(wxSizeEvent& evt)
 	}
 	wxSize pic = Panel->GetClientSize();
 	if (pic.GetWidth() > 0 && pic.GetHeight() > 0) {
-		wxImage Tripp = OriginPng.Scale(pic.GetWidth(), pic.GetHeight(), wxIMAGE_QUALITY_NORMAL);//если поставить HIGH покажут жопу (честна)
+		wxImage Tripp = OriginPng.Scale(pic.GetWidth(), pic.GetHeight(), wxIMAGE_QUALITY_BOX_AVERAGE);
 		TrippyTroppo = wxBitmap(Tripp);
 		Panel->Refresh();
 	}

@@ -29,6 +29,7 @@ private:
 	wxButton* ClearButton;
 	wxImage OriginPng;
 	wxBitmap TrippyTroppo;
+	wxIcon Icon;
 
 };
 

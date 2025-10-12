@@ -1,41 +1,33 @@
-# Visual Studio
-.vs/
-*.VC.db
-*.sqlite
-*.suo
-*.wsuo
-*.sdf
-*.opensdf
-*.ipch
-*.user
-*.userosscache
-
-# Build results
+# === Компиляция и временные файлы ===
+[Bb]in/
 [Dd]ebug/
-[Dd]ebugPublic/
 [Rr]elease/
-[Rr]eleases/
 x64/
 x86/
-[Bb]in/
-[Oo]bj/
-[Ll]og/
-
-# Visual Studio 2015/2017 cache/options directory
-.vs/
-
-# Visual Studio temp files
-*.tmp
-*.temp
-
-# Compiled files
-*.exe
-*.dll
+ipch/
 *.obj
 *.pdb
+*.exe
+*.dll
+*.log
 *.idb
+*.ipch
 *.ilk
+*.pch
+*.sdf
+*.opensdf
 *.tlog
-*.lastbuildstate
-*.recipe
-*.enc
+
+# === Visual Studio специфичные файлы ===
+.vs/
+*.user
+*.suo
+*.VC.db
+*.VC.opendb
+
+# === Системные файлы ===
+Thumbs.db
+*.DS_Store
+
+# === Исключения: оставляем нужные папки ===
+!icons/
